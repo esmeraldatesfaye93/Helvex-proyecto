@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Solicitar Cotización | Helvex</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container topbar">
+      <div class="logo">
+        <img src="logo.png" alt="Helvex">
+        <div>
+          <div class="brand">Helvex</div>
+          <div class="tag">Solicitar Cotización</div>
+        </div>
+      </div>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="contacto.html" class="cta">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="max-width:800px;text-align:center;margin-top:40px;">
+    <div class="card">
+      <h2>Solicitar Cotización</h2>
+      <p>Completa los siguientes datos para que nuestro equipo te contacte con una propuesta personalizada.</p>
+
+      <form style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
+        <input type="text" placeholder="Nombre completo" required style="padding:10px;border-radius:8px;border:1px solid #ccc;">
+        <input type="email" placeholder="Correo electrónico" required style="padding:10px;border-radius:8px;border:1px solid #ccc;">
+        <input type="tel" placeholder="Teléfono" required style="padding:10px;border-radius:8px;border:1px solid #ccc;">
+        <textarea placeholder="Describe el producto o servicio que te interesa..." rows="4" style="padding:10px;border-radius:8px;border:1px solid #ccc;"></textarea>
+        <button class="btn" type="submit">Enviar cotización</button>
+      </form>
+
+      <button class="btn secondary" style="margin-top:16px;" onclick="window.location.href='index.html'">Volver al inicio</button>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container foot-grid">
+      <p class="muted">© 2025 Helvex - Soluciones en T.I.</p>
+    </div>
+  </footer>
+</body>
+</html>

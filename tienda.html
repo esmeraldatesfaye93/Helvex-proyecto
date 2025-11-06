@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Helvex - Catálogo de Productos</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #c00;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      height: 45px;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    nav a.btn {
+      background: white;
+      color: #c00;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav a.btn:hover {
+      background: #ffeaea;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    .catalogo-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .producto {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 280px;
+      text-align: center;
+      padding: 1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .producto:hover {
+      transform: scale(1.03);
+    }
+
+    .producto img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .producto h3 {
+      margin-top: 1rem;
+    }
+
+    .producto p {
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .precio {
+      font-weight: bold;
+      color: #c00;
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+    }
+
+    button {
+      background-color: #c00;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #900;
+    }
+
+    #carrito {
+      margin-top: 3rem;
+      background: #f5f5f5;
+      padding: 1.5rem;
+      border-radius: 10px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    #carrito table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    #carrito th, #carrito td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #total {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #222;
+    }
+
+    .boton-pagar {
+      margin-top: 1rem;
+      background-color: #2d7a2d;
+    }
+
+    .boton-pagar:hover {
+      background-color: #206220;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      animation: aparecer .3s ease;
+    }
+
+    @keyframes aparecer {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    select, input {
+      width: 90%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .cerrar {
+      background: #900;
+      margin-top: 10px;
+    }
+
+    /* Sección de descripción */
+    #detalles-productos {
+      margin-top: 3rem;
+      background: #f8f8f8;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #detalles-productos h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    #detalles-productos ol {
+      line-height: 1.7;
+      color: #333;
+    }
+
+    #volver-inicio {
+      background-color:#c00;
+      color:white;
+      border:none;
+      padding:10px 15px;
+      border-radius:8px;
+      cursor:pointer;
+      transition:background 0.3s ease;
+    }
+
+    #volver-inicio:hover {
+      background-color:#900;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Encabezado principal -->
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Helvex logo" />
+      <div>
+        <h1 style="margin:0;font-size:20px;letter-spacing:0.8px;">Helvex</h1>
+        <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.85);">Expertos en grifería y baños</p>
+      </div>
+    </div>
+
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="tienda.html">Ver catálogo</a>
+      <a href="contacto.html" class="btn">Contacto</a>
+    </nav>
+  </header>
+
+  <!-- Contenido principal -->
+  <main>
+    <h1 style="text-align:center;margin-top:2rem;">Catálogo de Productos</h1>
+
+    <div class="catalogo-container">
+      <div class="producto">
+        <img src="monomando.jpg" alt="Grifería Monomando Helvex">
+        <h3>Grifería Monomando Helvex</h3>
+        <p>Grifo monomando de alta durabilidad con cartucho cerámico y diseño cromado.</p>
+        <p class="precio">$1,850</p>
+        <button onclick="agregarAlCarrito('Grifería Monomando Helvex',1850)">Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="regadera tipo lluvia.jpg" alt="Regadera tipo lluvia Helvex EcoRain">
+        <h3>Regadera tipo lluvia Helvex EcoRain</h3>
+        <p>Regadera ecológica con sistema EcoRain para ahorro de agua y flujo uniforme.</p>
+        <p class="precio">$1,250</p>
+        <button onclick="agregarAlCarrito('Regadera tipo lluvia Helvex EcoRain',1250)">Agregar al carrito</button>
+      </div>
+
+      <div class="producto">
+        <img src="fluxometro.jpg" alt="Fluxómetro electrónico Helvex Flow Sensor">
+        <h3>Fluxómetro electrónico Helvex Flow Sensor</h3>
+        <p>Dispositivo con sensor automático de flujo para uso sanitario sin contacto.</p>
+        <p class="precio">$2,100</p>
+        <button onclick="agregarAlCarrito('Fluxómetro electrónico Helvex Flow Sensor',2100)">Agregar al carrito</button>
+      </div>
+    </div>
+
+    <div id="carrito">
+      <h2>Carrito de compras</h2>
+      <table>
+        <thead>
+          <tr><th>Producto</th><th>Precio</th></tr>
+        </thead>
+        <tbody id="carrito-lista"></tbody>
+      </table>
+      <p id="total">Total: $0</p>
+      <button class="boton-pagar" onclick="abrirModal()">Proceder al pago</button>
+    </div>
+
+    <section id="detalles-productos">
+      <h2>Descripción detallada de productos (Artefacto / Requerimiento de servicio)</h2>
+      <ol>
+        <li>
+          <strong>Grifería Monomando Helvex</strong><br>
+          <em>Requerimiento de servicio:</em> Mezcladora monomando fabricada en latón cromado con cartucho cerámico de alta precisión. 
+          Incluye sistema de ahorro de agua y control de temperatura. Ideal para lavabos residenciales y comerciales.
+        </li><br>
+        <li>
+          <strong>Regadera tipo lluvia Helvex EcoRain</strong><br>
+          <em>Requerimiento de servicio:</em> Regadera tipo lluvia de acero inoxidable con sistema EcoRain de ahorro de agua, 
+          flujo homogéneo y sistema anti-cal. Apta para instalación en techo o pared.
+        </li><br>
+        <li>
+          <strong>Fluxómetro electrónico Helvex Flow Sensor</strong><br>
+          <em>Requerimiento de servicio:</em> Fluxómetro con sensor de proximidad infrarrojo, funcionamiento sin contacto, 
+          válvula solenoide de bajo consumo y cuerpo en latón cromado. Diseñado para baños públicos o de alto tránsito.
+        </li>
+      </ol>
+    </section>
+
+    <section style="text-align:center; margin-top:2rem;">
+      <a href="index.html">
+        <button id="volver-inicio">Volver al inicio</button>
+      </a>
+    </section>
+  </main>
+
+  <!-- Modal de pago -->
+  <div class="modal" id="modalPago">
+    <div class="modal-content">
+      <h2>Pago de tu compra</h2>
+      <p id="monto"></p>
+      <p><strong>Folio:</strong> <span id="folio"></span></p>
+
+      <label>Selecciona método de pago:</label>
+      <select id="metodoPago" onchange="mostrarCamposTarjeta()">
+        <option value="tarjeta">Tarjeta de crédito / débito</option>
+        <option value="transferencia">Transferencia bancaria</option>
+        <option value="efectivo">Pago en efectivo</option>
+      </select>
+
+      <div id="camposTarjeta">
+        <label>Número de tarjeta:</label>
+        <input type="text" maxlength="16" placeholder="0000 0000 0000 0000">
+        <label>Nombre del titular:</label>
+        <input type="text" placeholder="Nombre como aparece en la tarjeta">
+        <label>Fecha de expiración:</label>
+        <input type="text" maxlength="5" placeholder="MM/AA">
+        <label>CVV:</label>
+        <input type="text" maxlength="3" placeholder="123">
+        <label>Dirección de envío:</label>
+        <input type="text" placeholder="Calle, número, colonia, ciudad">
+        <label>Fecha estimada de entrega:</label>
+        <select>
+          <option value="">Seleccionar</option>
+          <option>Mañana</option>
+          <option>En 2 días</option>
+          <option>En 3 días</option>
+        </select>
+      </div>
+
+      <button onclick="confirmarPago()">Confirmar pago</button>
+      <button class="cerrar" onclick="cerrarModal()">Cancelar</button>
+    </div>
+  </div>
+
+  <script>
+    let total = 0;
+
+    function agregarAlCarrito(nombre, precio) {
+      const lista = document.getElementById("carrito-lista");
+      const fila = document.createElement("tr");
+      fila.innerHTML = `<td>${nombre}</td><td>$${precio}</td>`;
+      lista.appendChild(fila);
+      total += precio;
+      document.getElementById("total").textContent = "Total: $" + total;
+      alert(`${nombre} agregado al carrito.`);
+    }
+
+    function abrirModal() {
+      if (total === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+      }
+      document.getElementById("monto").textContent = "Total a pagar: $" + total;
+      document.getElementById("folio").textContent = generarFolio();
+      document.getElementById("modalPago").style.display = "flex";
+      mostrarCamposTarjeta();
+    }
+
+    function cerrarModal() {
+      document.getElementById("modalPago").style.display = "none";
+    }
+
+    function generarFolio() {
+      return "H-" + Math.floor(Math.random() * 900000 + 100000);
+    }
+
+    function mostrarCamposTarjeta() {
+      const metodo = document.getElementById("metodoPago").value;
+      const campos = document.getElementById("camposTarjeta");
+      campos.style.display = metodo === "tarjeta" ? "block" : "none";
+    }
+
+    function confirmarPago() {
+      const metodo = document.getElementById("metodoPago").value;
+      const folio = document.getElementById("folio").textContent;
+      alert(`Pago realizado con éxito.\n\nMétodo: ${metodo}\nFolio: ${folio}\nTotal: $${total}`);
+      document.getElementById("carrito-lista").innerHTML = "";
+      total = 0;
+      document.getElementById("total").textContent = "Total: $0";
+      cerrarModal();
+    }
+  </script>
+</body>
+</html>
